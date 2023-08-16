@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                https://github.com/vinodbvast/spring-boot-hello-world.git
+                git_url:"https://github.com/vinodbvast/spring-boot-hello-world.git"
             }
         }
         
