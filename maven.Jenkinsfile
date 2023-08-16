@@ -17,7 +17,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    def mvnCmd = "${env.MAVEN_HOME}/usr/share/maven"
+                    def mvnCmd = "${env.MAVEN_HOME}/bin/mvn"
                     sh "${mvnCmd} test"
                 }
             }
@@ -25,10 +25,7 @@ pipeline {
         
         stage('Deploy') {
             steps {
-                script {
-                    def mvnCmd = "${env.MAVEN_HOME}/usr/share/maven"
-                    sh "${mvnCmd} deploy"
-                }
+                echo "Deploying...."
             }
         }
     }
