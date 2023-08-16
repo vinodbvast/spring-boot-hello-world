@@ -1,15 +1,15 @@
 pipeline {
     agent any
-    environment {
-        MAVEN_HOME = tool name: 'maven-3.9.4', type: 'maven'
+    tools {
+            maven 'maven-3.6.3'
     }
     stages {
        
         stage('Build') {
             steps {
                 script {
-                    def mvnCmd = "${env.MAVEN_HOME}/bin/mvn"
-                    sh "${mvnCmd} clean package"
+                 
+                    sh "mvn clean package"
                 }
             }
         }
@@ -17,8 +17,8 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    def mvnCmd = "${env.MAVEN_HOME}/bin/mvn"
-                    sh "${mvnCmd} test"
+                   
+                    sh "mvn test"
                 }
             }
         }
