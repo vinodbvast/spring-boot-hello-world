@@ -1,13 +1,10 @@
 pipeline {
     agent any
-    
     environment {
-        MAVEN_HOME = tool name: 'Apache Maven', type: '3.6.3'
+        MAVEN_HOME = tool name: 'maven-3.9.4', type: 'maven'
     }
-    
     stages {
        
-        
         stage('Build') {
             steps {
                 script {
