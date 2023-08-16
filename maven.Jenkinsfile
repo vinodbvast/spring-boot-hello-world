@@ -23,6 +23,12 @@ pipeline {
             }
         }
         
+        stage('Package') {
+            steps {
+                echo 'this is the Package job'
+                sh 'mvn package -DskipTests'
+            }
+        }
         stage('Deploy') {
             steps {
                 echo "Deploying...."
