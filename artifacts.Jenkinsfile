@@ -34,7 +34,7 @@ pipeline {
              steps {
                 rtUpload (
                     // Obtain an Artifactory server instance, defined in Jenkins --> Manage Jenkins --> Configure System:
-                    serverId: "Artifactory-1",
+                    serverId: "jfrogdev-01",
                     spec: """{
                             "files": [
                                     {
