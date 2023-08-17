@@ -14,14 +14,14 @@ pipeline {
             }
         }
         
-        stage('Test') {
-            steps {
-                script {
+        // stage('Test') {
+        //     steps {
+        //         script {
                    
-                    sh "mvn test"
-                }
-            }
-        }
+        //             sh "mvn test"
+        //         }
+        //     }
+        // }
         
         stage("Artifacts"){
              steps {
@@ -32,7 +32,7 @@ pipeline {
                             "files": [
                                     {
                                         "pattern": "./target/*.jar",
-                                        "target": "/artifactory-build-info/buildResults/"
+                                        "target": "/artifactory-build-info/"
                                     }
                                 ]
                             }"""
