@@ -9,7 +9,7 @@ pipeline {
             steps {
                 script {
                  
-                    sh "mvn clean package"
+                    sh "mvn clean install"
                 }
             }
         }
@@ -32,7 +32,7 @@ pipeline {
                             "files": [
                                     {
                                         "pattern": "**/target/*.jar",
-                                        "target": "dev-libs-release/spring-app/"
+                                        "target": "dev-libs-release/"
                                     }
                                 ]
                             }"""
