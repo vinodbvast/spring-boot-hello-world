@@ -32,7 +32,7 @@ pipeline {
                             "files": [
                                     {
                                         "pattern": "**/target/*.jar",
-                                        "target": "artifactory-build-info/"
+                                        "target": "dev-libs-release/spring-app/"
                                     }
                                 ]
                             }"""
