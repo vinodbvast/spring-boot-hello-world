@@ -13,33 +13,36 @@ pipeline {
                 }
             }
         }
-        
-        // stage('Test') {
-        //     steps {
-        //         script {
-                   
-        //             sh "mvn test"
-        //         }
-        //     }
-        // }
-        
-        stage("Artifacts"){
-             steps {
-                rtUpload (
-                    // Obtain an Artifactory server instance, defined in Jenkins --> Manage Jenkins --> Configure System:
-                    serverId: "jfrogdev-01",
-                    spec: """{
-                            "files": [
-                                    {
-                                        "pattern": "**/target/*.jar",
-                                        "target": "dev-libs-release/"
-                                    }
-                                ]
-                            }"""
+        stage("Upload Artifacts"){
+            steps{
+                
+                rtServer (
+                        id: 'jfrog-server',
+                        url: 'http://192.168.56.105:8082/artifactory/',
+                        // If you're using username and password:
+                        username: 'admin',
+                        password: 'Admin@123',
+                        // If you're using Credentials ID:
+                        // credentialsId: 'ccrreeddeennttiiaall',
+                        // If Jenkins is configured to use an http proxy, you can bypass the proxy when using this Artifactory server:
+                        // bypassProxy: true,
+                        // Configure the connection timeout (in seconds).
+                        // The default value (if not configured) is 300 seconds: 
+                        timeout: 300
                 )
-               
+                rtUpload (
+                    serverId: 'jfrog-server',
+                    spec: '''{
+                        "files": [
+                            {
+                            "pattern": "target/*.jar",
+                            "target": "example-repo-local/spring-boot-hello-world/"
+                            }
+                        ]
+                    }''',
+                )    
             }
-        }
+        } 
         stage('Deploy') {
             steps {
                 echo "Deploying...."
