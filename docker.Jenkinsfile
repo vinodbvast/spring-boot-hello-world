@@ -20,11 +20,11 @@ pipeline {
         stage('Build and Push Docker Image') {
             steps {
                 script {
-                    def dockerfile = 'Dockerfile.dockerfile' // Specify the correct Dockerfile name
+                    def dockerfile = 'dockerfile.dockerfile' // Specify the correct Dockerfile name
                     def dockerImageName = 'hemvinod/ubuntu:latest'
                     
                     // Authenticate with Docker Hub using the credentials
-                    docker.withRegistry('https://registry.hub.docker.com', 'hemvinod') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_credentials') {
                         def dockerImage = docker.build(dockerImageName, "--file ${dockerfile} .")
                         dockerImage.push()
                     }
