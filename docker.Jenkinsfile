@@ -24,7 +24,7 @@ pipeline {
                     def dockerImageName = 'hemvinod/ubuntu:latest'
                     
                     // Authenticate with Docker Hub using the credentials
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_credentials') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'vkbotta.4362@gmail.com') {
                         def dockerImage = docker.build(dockerImageName, "--file ${dockerfile} .")
                         dockerImage.push()
                     }
