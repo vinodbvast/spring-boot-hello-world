@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    // Configure Git behavior
+                    checkout([$class: 'GitSCM', 
+                      branches: [[name: '*/dev']],
+                      doGenerateSubmoduleConfigurations: false,
+                      extensions: [
+                        [$class: 'AdvancedCloneBehaviors', 
+                          configure: [
+                            [$class: 'AdvancedCloneOption', 
+                              extension: [$class: 'CloneOption', 
+                                shallow: false, 
+                                noTags: false, 
+                                reference: '', 
+                                timeout: 10,
+                                honorRefspec: true, 
+                                refspec: '+refs/heads/dev:refs/remotes/origin/dev', 
+                                depth: 1
+                              ], 
+                              name: 'Set \'pull.rebase\' to \'false\''
+                            ]
+                          ]
+                        ],
+                      userRemoteConfigs: [[
+                        credentialsId: 'vinodbvast', // Specify your Git credentials ID
+                        url: 'https://github.com/vinodbvast/spring-boot-hello-world.git'
+                      ]]
+                    ])
+                }
+            }
+        }
+    }
+    // Add other stages as needed
+}
