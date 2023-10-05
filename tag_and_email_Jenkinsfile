@@ -33,6 +33,25 @@ pipeline {
                 }
             }
         }
+        stage('Tag Artifact') {
+            steps {
+                script {
+                    // Create a tag with the build version
+                    def version = "${BUILD_NUMBER}"
+                    sh "git tag -a v${version} -m 'Tagging for build ${version}'"
+                    sh "git push origin v${version}"
+                }
+            }
+        }
+    }
+    post {
+        failure {
+            emailext (
+                to: 'vinodb@valueaddsofttech.com',
+                subject: "Build Failed for ${TAG and Notify on Failure}",
+                body: "The build failed. Please investigate."
+            )
+        }
     }
     // Add other stages as needed
 }
