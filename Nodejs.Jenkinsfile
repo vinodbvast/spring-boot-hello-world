@@ -7,19 +7,22 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'npm install'
+                sh 'npm install';
             }
+            tools {
+    nodejs "NodeJs"
+}
         }
         stage('Test') {
             steps {
-                sh './test.sh'
+                sh './test.sh';
             }
         }
         stage('Deliver') {
             steps {
-                sh './deliver.sh'
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sh './kill.sh'
+                sh './deliver.sh';
+                input message: 'Finished using the web site? (Click "Proceed" to continue)';
+                sh './kill.sh';
             }
         }
     }
