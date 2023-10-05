@@ -45,10 +45,17 @@ pipeline {
         }
     }
     post {
+        success {
+            emailext (
+                to: 'vinodb@valueaddsofttech.com',
+                subject: "Build Succeeded for {{JOB_NAME}}",
+                body: "The build succeeded."
+            )
+        }
         failure {
             emailext (
                 to: 'vinodb@valueaddsofttech.com',
-                subject: "Build Failed for {{TAG and Notify on Failure}}", // Corrected subject
+                subject: "Build Failed for {{JOB_NAME}}",
                 body: "The build failed. Please investigate."
             )
         }
