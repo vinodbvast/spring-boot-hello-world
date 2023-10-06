@@ -28,7 +28,7 @@ pipeline {
                       userRemoteConfigs: [[
                         credentialsId: 'vinodbvast', // Specify your Git credentials ID
                         url: 'https://github.com/vinodbvast/spring-boot-hello-world.git'
-                      ]]
+                      ]
                     ])
                 }
             }
