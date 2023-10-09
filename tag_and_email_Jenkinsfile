@@ -17,9 +17,7 @@ pipeline {
         stage('Configure Git') {
             steps {
                 script {
-                    // Change to the workspace directory
                     dir("${/home/lab001/.jenkins/workspace/Dev/Tag_and_notify_failure}") {
-                        // Configure Git user email and name
                         sh "git config user.email 'vinodb@valueaddsofttech.com'"
                         sh "git config user.name 'vinodbvast'"
                     }
