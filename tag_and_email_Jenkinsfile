@@ -8,7 +8,8 @@ pipeline {
                       branches: [[name: 'dev']],
                       userRemoteConfigs: [[
                         credentialsId: 'vinodbvast',
-                        url: 'https://github.com/vinodbvast/spring-boot-hello-world.git'
+                        url: 'https://vinodbvast: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@github.com/vinodbvast/spring-boot-hello-world.git
+'
                       ]]
                     ])
                 }
