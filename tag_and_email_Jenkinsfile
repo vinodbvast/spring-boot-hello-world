@@ -20,7 +20,7 @@ pipeline {
                 script {
                     // Set Git user and email for this pipeline
                     sh "git config user.email 'vinodb@valueaddsofttech.com'"
-                    sh "git config user.name 'vinodbvast'"
+                    sh "git config user.name 'vinodb'"
                 }
             }
         }
