@@ -3,12 +3,11 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Checkout code from Git
                 script {
                     checkout([$class: 'GitSCM', 
-                      branches: [[name: 'dev']], // Assuming you want to checkout the 'dev' branch
+                      branches: [[name: 'dev']],
                       userRemoteConfigs: [[
-                        credentialsId: 'vinodbvast', // Specify your Git credentials ID
+                        credentialsId: 'vinodbvast',
                         url: 'https://github.com/vinodbvast/spring-boot-hello-world.git'
                       ]]
                     ])
@@ -18,16 +17,18 @@ pipeline {
         stage('Configure Git') {
             steps {
                 script {
-                    // Set Git user and email for this pipeline
-                    sh "git config user.email 'vinodb@valueaddsofttech.com'"
-                    sh "git config user.name 'vinodb'"
+                    // Change to the workspace directory
+                    dir("${workspace}") {
+                        // Configure Git user email and name
+                        sh "git config user.email 'vinodb@valueaddsofttech.com'"
+                        sh "git config user.name 'vinodb'"
+                    }
                 }
             }
         }
         stage('Build') {
             steps {
-                // Build a Java project using Maven
-                sh 'mvn clean package' // Replace with your Maven goals
+                sh 'mvn clean package' 
             }
         }
         stage('Tag Artifact') {
@@ -36,7 +37,6 @@ pipeline {
             }
             steps {
                 script {
-                    // Create a tag with the build version
                     def version = "${BUILD_NUMBER}"
                     sh "git tag -a v${version} -m 'Tagging for build ${version}'"
                     sh "git push origin v${version}"
