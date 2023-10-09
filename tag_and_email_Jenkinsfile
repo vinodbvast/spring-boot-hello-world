@@ -36,8 +36,10 @@ pipeline {
             steps {
                 script {
                     def version = "${BUILD_NUMBER}"
-                    sh "git tag -a v${version} -m 'Tagging for build ${version}'"
-                    sh "git push origin v${version}"
+                    withCredentials([gitUsernamePassword(credentialsId: 'vinodbvast', gitToolName: 'Default')]) {
+                        sh "git tag -a v${version} -m 'Tagging for build ${version}'"
+                        sh "git push origin v${version}"
+                    }
                 }
             }
         }
