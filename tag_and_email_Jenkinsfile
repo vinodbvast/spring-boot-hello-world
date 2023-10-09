@@ -3,22 +3,10 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                // Checkout code from Git
                 script {
-                    // Configure Git behavior
                     checkout([$class: 'GitSCM', 
-                      branches: [[name: '*/dev']],
-                      doGenerateSubmoduleConfigurations: false,
-                      extensions: [
-                        [$class: 'hudson.plugins.git.extensions.impl.AdvancedCloneOption', 
-                          shallow: false, 
-                          noTags: false, 
-                          reference: '', 
-                          timeout: 10,
-                          honorRefspec: true, 
-                          refspec: '+refs/heads/dev:refs/remotes/origin/dev', 
-                          depth: 1
-                        ]
-                      ],
+                      branches: [[name: 'dev']], // Assuming you want to checkout the 'dev' branch
                       userRemoteConfigs: [[
                         credentialsId: 'vinodbvast', // Specify your Git credentials ID
                         url: 'https://github.com/vinodbvast/spring-boot-hello-world.git'
@@ -27,7 +15,16 @@ pipeline {
                 }
             }
         }
+        stage('Build') {
+            steps {
+                // Build a Java project using Maven
+                sh 'mvn clean package' // Replace with your Maven goals
+            }
+        }
         stage('Tag Artifact') {
+            when {
+                expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
+            }
             steps {
                 script {
                     // Create a tag with the build version
