@@ -18,9 +18,7 @@ pipeline {
         stage('Configure Git') {
             steps {
                 script {
-                    // Change to the workspace directory
                     dir('/home/lab001/.jenkins/workspace/Dev/Tag_and_notify_failure') {
-                        // Configure Git user email and name
                         sh "git config user.email 'vinodb@valueaddsofttech.com'"
                         sh "git config user.name 'vinodbvast'"
                     }
@@ -29,7 +27,6 @@ pipeline {
         }
         stage('Build') {
             steps {
-                // Build the project using Maven
                 sh 'mvn clean package' 
             }
         }
@@ -40,10 +37,16 @@ pipeline {
             steps {
                 script {
                     def version = "${BUILD_NUMBER}"
+                    def jarFileName = "spring-boot-2-hello-world-${version}.jar"
+                    def tagMessage = "Tagging for build ${version}"
+
                     withCredentials([gitUsernamePassword(credentialsId: 'vinodbvast')]) {
-                        // Tag and push the artifact to the Git repository
-                        sh "git tag -a v${version} -m 'Tagging for build ${version}'"
+                        sh "git tag -a v${version} -m '${tagMessage}'"
                         sh "git push origin v${version}"
+
+                        // Rename the JAR file with the version and archive it
+                        sh "mv target/spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar target/${jarFileName}"
+                        archiveArtifacts artifacts: "target/${jarFileName}", allowEmptyArchive: true
                     }
                 }
             }
@@ -51,8 +54,8 @@ pipeline {
     }
     post {
         always {
-            // Archive the built JAR file as an artifact
-            archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
+            // Archive the original JAR file as well
+            archiveArtifacts artifacts: '**/target/spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar', allowEmptyArchive: true
         }
         success {
             emailext (
