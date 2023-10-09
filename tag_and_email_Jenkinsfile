@@ -15,6 +15,15 @@ pipeline {
                 }
             }
         }
+        stage('Configure Git') {
+            steps {
+                script {
+                    // Set Git user and email for this pipeline
+                    sh "git config user.email 'vinodb@valueaddsofttech.com'"
+                    sh "git config user.name 'vinodbvast'"
+                }
+            }
+        }
         stage('Build') {
             steps {
                 // Build a Java project using Maven
